@@ -71,6 +71,7 @@ const onSubmit = async () => {
 
   setTimeout(() => {
     $q.loading.hide();
+    router.push({ name: 'otp-login' });
   }, 3000);
 };
 

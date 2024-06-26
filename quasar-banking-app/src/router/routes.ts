@@ -22,6 +22,17 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/otp-login',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'otp-login',
+        component: () => import('pages/OtpPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
