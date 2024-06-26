@@ -53,6 +53,8 @@ import { useAuthStore } from 'stores/auth-store';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 
+import { HOME_PATH, OTP_PATH } from 'src/router/routes';
+
 const authStore = useAuthStore();
 const router = useRouter();
 const $q = useQuasar();
@@ -71,11 +73,11 @@ const onSubmit = async () => {
 
   setTimeout(() => {
     $q.loading.hide();
-    router.push({ name: 'otp-login' });
+    router.push({ path: OTP_PATH });
   }, 3000);
 };
 
-const registerRoute = () => router.push({ name: 'register' });
+const registerRoute = () => router.push({ path: HOME_PATH });
 
 defineOptions({
   name: 'LoginPage',
