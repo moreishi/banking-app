@@ -1,11 +1,11 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <q-card flat style="min-width: 720px">
+  <q-page class="items-center justify-evenly">
+    <q-card flat>
       <q-card-section>
         <h5 class="text-h5 q-mb-none red-5">ONLINE BANKING APP</h5>
         <h3 class="text-h3 q-mt-sm">Login</h3>
 
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
             filled
             v-model="username"
@@ -30,8 +30,16 @@
 
           <q-toggle v-model="rememberMe" color="red-7" label="Remember me" />
 
-          <div>
+          <div class="q-gutter-sm">
             <q-btn class="col" label="Log in" color="red-7" type="submit" />
+            <q-btn
+              @click.prevent="registerRoute"
+              class="col"
+              label="Register"
+              flat
+              color="red-7"
+              type="button"
+            />
           </div>
         </q-form>
       </q-card-section>
@@ -41,10 +49,32 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useAuthStore } from 'stores/auth-store';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+
+const authStore = useAuthStore();
+const router = useRouter();
+const $q = useQuasar();
 
 const username = ref('');
 const password = ref('');
 const rememberMe = ref(true);
+
+const onSubmit = async () => {
+  await authStore.authenticate({
+    username: username.value,
+    password: password.value,
+  });
+
+  $q.loading.show();
+
+  setTimeout(() => {
+    $q.loading.hide();
+  }, 3000);
+};
+
+const registerRoute = () => router.push({ name: 'register' });
 
 defineOptions({
   name: 'LoginPage',
